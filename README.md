@@ -1,6 +1,6 @@
 # ZonaFit
 
-ZonaFit es una aplicación para administrar los clientes de un gimnasio. El proyecto evoluciona hacia una API REST construida con Spring Boot y una interfaz web construida con React.
+ZonaFit es una API REST construida con Spring Boot para administrar los clientes de un gimnasio. El backend expone operaciones CRUD con respuestas JSON y se consumirá desde una interfaz web construida con React.
 
 ## Problema que resuelve
 
@@ -112,4 +112,4 @@ GET http://localhost:8080/api/clientes
 
 ## Estado actual
 
-La conexión con MySQL, el servidor web y `GET /api/clientes` ya están verificados. El desarrollo de los endpoints restantes, la validación, las pruebas automatizadas y la interfaz React se encuentra en curso.
+La conexión con MySQL, el servidor web y los endpoints CRUD de clientes ya están verificados. La validación de datos, las pruebas automatizadas y la interfaz React se encuentran en curso.
