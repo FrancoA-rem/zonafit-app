@@ -4,6 +4,7 @@ import gm.zona_fit.dto.ClienteRequest;
 import gm.zona_fit.dto.ClienteResponse;
 import gm.zona_fit.modelo.Cliente;
 import gm.zona_fit.servicio.IClienteServicio;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,7 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<ClienteResponse> crear(@RequestBody ClienteRequest request) {
+    public ResponseEntity<ClienteResponse> crear(@Valid @RequestBody ClienteRequest request) {
         Cliente cliente = new Cliente();
         cliente.setNombre(request.getNombre());
         cliente.setApellido(request.getApellido());
@@ -72,7 +73,7 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClienteResponse> actualizar(@PathVariable Integer id, @RequestBody ClienteRequest request) {
+    public ResponseEntity<ClienteResponse> actualizar(@PathVariable Integer id, @Valid @RequestBody ClienteRequest request) {
         Cliente cliente = clienteServicio.buscarClientePorId(id);
 
         if(cliente == null){
