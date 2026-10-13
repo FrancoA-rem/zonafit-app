@@ -6,7 +6,7 @@ La estrategia de pruebas garantiza que la API cumple el contrato definido, conse
 
 ## Estado actual
 
-Actualmente el proyecto cuenta con una prueba de carga de contexto de Spring Boot. Todavía no existe una suite completa de pruebas unitarias, de controlador o de integración. Por tanto, el MVP no debe considerarse completamente validado hasta completar los casos descritos en este documento.
+El proyecto cuenta con 17 pruebas automatizadas: 9 de controlador (`@WebMvcTest` y MockMvc), 5 de servicio con Mockito, 2 de repositorio (`@DataJpaTest` sobre H2) y 1 de carga de contexto. La suite no depende de MySQL local ni de datos del entorno. La integración real con MySQL mediante Testcontainers queda pendiente.
 
 ## Niveles de prueba
 
@@ -78,7 +78,7 @@ Las pruebas de integración deben validar:
 5. Que una eliminación no permite recuperar el registro.
 6. Que los datos de una prueba no se mezclan con los de otra.
 
-Testcontainers con MySQL es la opción más fiel para el proyecto. H2 puede utilizarse para pruebas rápidas, siempre que se configure el dialecto de forma compatible.
+Actualmente las pruebas de repositorio usan H2 en modo MySQL. Testcontainers con MySQL es la opción objetivo para validar la integración real con el motor definitivo.
 
 ## Casos de prueba en formato Given/When/Then
 
@@ -133,12 +133,12 @@ mvn -Dtest=ClienteControllerTest#crearCliente test
 
 Antes de considerar estable el MVP:
 
-- [ ] Todas las rutas CRUD tienen pruebas.
-- [ ] Los casos de validación tienen pruebas automatizadas.
-- [ ] Los casos de cliente inexistente tienen pruebas.
+- [x] Todas las rutas CRUD tienen pruebas.
+- [x] Los casos de validación tienen pruebas automatizadas.
+- [x] Los casos de cliente inexistente tienen pruebas.
 - [ ] Existe al menos una prueba de integración con MySQL.
-- [ ] Las pruebas no dependen de datos del entorno local.
-- [ ] El resultado de `mvn test` es exitoso.
+- [x] Las pruebas no dependen de datos del entorno local.
+- [x] El resultado de `mvn test` es exitoso.
 - [ ] Se documentan los errores esperados de la API.
 
 ## Estrategia para el frontend

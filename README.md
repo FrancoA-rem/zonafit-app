@@ -112,4 +112,4 @@ GET http://localhost:8080/api/clientes
 
 ## Estado actual
 
-La conexión con MySQL, el servidor web y los endpoints CRUD de clientes ya están verificados. La validación de datos, las pruebas automatizadas y la interfaz React se encuentran en curso.
+La conexión con MySQL, el servidor web, los endpoints CRUD y las pruebas automatizadas ya están verificados. La documentación de errores de la API y la interfaz React se encuentran en curso.
