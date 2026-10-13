@@ -8,7 +8,7 @@
 - Los identificadores viajan en la ruta.
 - Los códigos HTTP comunican el resultado de la operación.
 
-## Rutas del MVP
+## Rutas implementadas
 
 | Método | Ruta | Descripción | Respuesta exitosa | Errores esperados |
 |---|---|---|---|---|
@@ -91,11 +91,36 @@ Crea un cliente a partir de un `ClienteRequest`.
 
 La operación no debe aceptar un `id` en el cuerpo de creación.
 
+Respuesta `201 Created`:
+
+```json
+{
+  "id": 1,
+  "nombre": "Ana",
+  "apellido": "López",
+  "membresia": 100
+}
+```
+
+Una solicitud con `nombre` vacío o `membresia` menor o igual a cero devuelve `400 Bad Request`.
+
 ## `PUT /api/clientes/{id}`
 
 Actualiza los datos modificables de un cliente existente.
 
 El `id` de la ruta identifica el registro que se actualiza. Si no existe, la API responde `404 Not Found`.
+
+Solicitud:
+
+```json
+{
+  "nombre": "Ana María",
+  "apellido": "López",
+  "membresia": 120
+}
+```
+
+Respuesta `200 OK` con el cliente actualizado.
 
 ## `DELETE /api/clientes/{id}`
 
@@ -117,23 +142,27 @@ La API debe rechazar datos inválidos antes de llegar a la base de datos. Las re
 |---|---|
 | `nombre` | Obligatorio, no vacío |
 | `apellido` | Obligatorio, no vacío |
-| `membresia` | Obligatorio, número válido |
+| `membresia` | Obligatorio, entero mayor a cero |
 
 Una solicitud inválida debe devolver `400 Bad Request`.
 
 ## Formato de error
 
-Se propone un formato uniforme para los errores:
+Cuando una solicitud no supera la validación, `GlobalExceptionHandler` devuelve `400 Bad Request` con el detalle de cada campo:
 
 ```json
 {
-  "timestamp": "2026-10-03T10:00:00",
   "status": 400,
-  "error": "Bad Request",
-  "message": "El nombre es obligatorio",
-  "path": "/api/clientes"
+  "errores": {
+    "nombre": "El nombre es obligatorio",
+    "membresia": "La membresía debe ser mayor a cero"
+  }
 }
 ```
+
+Cuando el recurso solicitado no existe, los endpoints `GET`, `PUT` y `DELETE` devuelven `404 Not Found` sin cuerpo.
+
+Un `id` que no sea un número válido devuelve `400 Bad Request`.
 
 ## CORS y frontend
 
@@ -143,4 +172,4 @@ No se recomienda habilitar CORS abierto en producción.
 
 ## Estado actual
 
-El endpoint `GET /api/clientes` ya se encuentra operativo y verificado contra MySQL. Los demás endpoints forman parte del contrato objetivo del MVP y deben implementarse junto con validaciones, pruebas y manejo de errores.
+Los endpoints `GET`, `POST`, `PUT` y `DELETE` de `/api/clientes` están implementados, validados y verificados contra MySQL. El manejo de errores de validación está centralizado en `GlobalExceptionHandler` y la suite de pruebas automatizadas cubre las rutas, los casos de validación, los recursos inexistentes y la persistencia con H2. La interfaz React queda pendiente.
